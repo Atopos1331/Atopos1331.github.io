@@ -1,0 +1,23 @@
+{
+  "name": "Echo Loop",
+  "description": "A small interactive program session that reads stdin and mirrors it back to the terminal.",
+  "version": 1,
+  "runtime": {
+    "script": [
+      "write(\"Echo Loop started. Type anything, or type 'exit' to stop.\");",
+      "while (true) {",
+      "  const line = await readLine();",
+      "  if (line.trim().toLowerCase() === \"exit\") {",
+      "    write(\"bye\");",
+      "    exit(0);",
+      "  }",
+      "  if (line.trim().toLowerCase() === \"clear\") {",
+      "    clear();",
+      "    write(\"screen cleared\");",
+      "    continue;",
+      "  }",
+      "  write(`echo: ${line}`);",
+      "}"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "Flag Checker",
+  "description": "A small JS reverse challenge wrapped as a packaged .exe session. Recover the accepted flag by understanding the transform.",
+  "version": 1,
+  "runtime": {
+    "script": [
+      "const salts = [19, 7, 41, 13, 29];",
+      "const expected = [15, 36, 231, 192, 149, 168, 173, 96, 99, 19, 12, 53, 46, 37, 252, 255, 250, 105, 116, 151, 118, 149, 99, 90, 25, 246, 35];",
+      "const encode = input => Array.from(input).map((char, index) => {",
+      "  let value = char.charCodeAt(0) ^ ((salts[index % salts.length] + index * 11) & 255);",
+      "  value = ((value << 1) | (value >> 7)) & 255;",
+      "  value = (value + 37 + index * 3) & 255;",
+      "  return value;",
+      "});",
+      "const same = (left, right) => left.length === right.length && left.every((value, index) => value === right[index]);",
+      "write('flag-checker.exe');",
+      "write('Enter the flag or type exit to quit.');",
+      "write('Format hint: flag{...}');",
+      "while (true) {",
+      "  write('flag>');",
+      "  const attempt = (await readLine()).trim();",
+      "  if (attempt.toLowerCase() === 'exit') {",
+      "    write('bye');",
+      "    exit(0);",
+      "  }",
+      "  if (!attempt.startsWith('flag{') || !attempt.endsWith('}')) {",
+      "    writeErr('format mismatch');",
+      "    continue;",
+      "  }",
+      "  const encoded = encode(attempt);",
+      "  if (same(encoded, expected)) {",
+      "    write('access granted');",
+      "    write('challenge solved');",
+      "    exit(0);",
+      "  }",
+      "  const correctSlots = encoded.reduce((count, value, index) => count + (value === expected[index] ? 1 : 0), 0);",
+      "  writeErr('access denied');",
+      "  write('matched transformed slots: ' + correctSlots + ' / ' + expected.length);",
+      "}"
+    ]
+  }
+}

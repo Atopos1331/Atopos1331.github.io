@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Intelligence Profile :: Eafoo</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+
+            /* Light Theme */
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --accent-color: #0077cc;
+            --muted-color: #666;
+            --panel-bg: #f5f5f5;
+            --status-green: #009944;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Theme */
+                --bg-color: #0c0d10;
+                --text-color: #e0e0e0;
+                --accent-color: #00cccc;
+                --muted-color: #888;
+                --panel-bg: #14161a;
+                --status-green: #00ff66;
+                --border-color: rgba(255, 255, 255, 0.1);
+                --shadow: 0 4px 16px rgba(0,0,0,0.4);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        code, kbd, pre, .mono {
+            font-family: "SF Mono", "Roboto Mono", Menlo, Consolas, Monaco, monospace;
+            font-size: 0.9em;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--status-green);
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        /* Header Elements */
+        header { text-align: center; }
+        
+        .system-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background-color: var(--panel-bg);
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: var(--muted-color);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .status-dot {
+            height: 10px; width: 10px;
+            background-color: var(--status-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--status-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+        }
+
+        h1 {
+            font-size: 3em; font-weight: 800;
+            letter-spacing: -1.5px; margin-bottom: 16px;
+        }
+
+        h1 .alias { color: var(--accent-color); }
+
+        .primary-hook {
+            font-size: 1.15em; font-weight: 400;
+            color: var(--muted-color); max-width: 750px;
+            margin: 0 auto; text-align: justify;
+            text-align-last: center;
+        }
+
+        /* Dashboard Highlights */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .module-panel {
+            background-color: var(--panel-bg);
+            padding: 30px; border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+
+        .module-label {
+            font-size: 0.75em; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--accent-color);
+            margin-bottom: 12px; display: block;
+        }
+
+        .module-title { font-size: 1.5em; font-weight: 700; margin-bottom: 16px; }
+
+        .metric-list { list-style: none; color: var(--muted-color); }
+        .metric-item {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .metric-item:last-child { border-bottom: none; }
+        .metric-key { font-weight: 500; color: var(--text-color); }
+        .high-value { color: var(--status-green); font-weight: 700; }
+
+        /* Detailed Sections */
+        .content-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .section-label {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 1.5em; font-weight: 700; color: var(--text-color);
+            margin-bottom: 24px;
+        }
+        .section-label::before {
+            content: '>'; color: var(--accent-color); font-family: var(--mono);
+        }
+
+        /* Timeline / Item Lists */
+        .intel-block {
+            margin-bottom: 30px; padding-left: 20px;
+            border-left: 2px solid var(--border-color);
+            position: relative;
+        }
+        .intel-block:last-child { margin-bottom: 0; }
+        .intel-block:hover { border-left-color: var(--accent-color); }
+        
+        .intel-block::before {
+            content: ''; position: absolute; left: -6px; top: 8px;
+            width: 10px; height: 10px; border-radius: 50%;
+            background-color: var(--panel-bg); border: 2px solid var(--border-color);
+            transition: border-color 0.2s ease;
+        }
+        .intel-block:hover::before { border-color: var(--accent-color); }
+
+        .intel-header {
+            display: flex; justify-content: space-between;
+            align-items: baseline; flex-wrap: wrap; margin-bottom: 8px;
+        }
+        .intel-title { font-size: 1.25em; font-weight: 700; color: var(--text-color); }
+        .intel-meta { font-size: 0.9em; color: var(--accent-color); font-family: var(--mono); }
+        .intel-subtitle { font-size: 1em; font-weight: 600; color: var(--muted-color); margin-bottom: 12px; }
+
+        .intel-details {
+            list-style: disc; padding-left: 20px;
+            color: var(--muted-color); font-size: 0.95em;
+        }
+        .intel-details li { margin-bottom: 8px; }
+        .intel-details strong { color: var(--text-color); }
+
+        /* Tag Grid for Skills/Coursework */
+        .tag-grid {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            margin-top: 10px; margin-bottom: 20px;
+        }
+        .tag {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px; border-radius: 6px;
+            font-size: 0.85em; color: var(--text-color);
+        }
+        .tag-highlight { border-color: var(--accent-color); color: var(--accent-color); }
+
+        /* Footer */
+        footer {
+            text-align: center; color: var(--muted-color);
+            font-size: 0.9em; border-top: 1px solid var(--border-color);
+            padding-top: 40px; margin-top: 20px;
+        }
+
+        .contact-uplink {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 20px; margin-bottom: 30px; list-style: none;
+        }
+
+        .uplink-item {
+            padding: 8px 16px; background-color: var(--panel-bg);
+            border-radius: 8px; box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .copyright-line { font-size: 0.8em; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .intel-header { flex-direction: column; }
+            .intel-meta { margin-top: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+
+        <header>
+            <div class="system-status mono">
+                <span class="status-dot"></span>
+                <span>SYSTEM ACTIVE</span> |
+                <span>LOC: HKG</span> |
+                <span>ROLE: DEV // RESEARCH</span>
+            </div>
+            <h1>CHEN Yifu <span class="alias mono">[Eafoo]</span></h1>
+            <p class="primary-hook">I am a second-year undergraduate at the Hong Kong University of Science and Technology (HKUST), pursuing a B.Sc. in Computer Science (Extended Major in Artificial Intelligence) and Electronic Engineering. My work spans cybersecurity, reverse engineering, and full-stack system architecture.</p>
+        </header>
+
+        <section class="dashboard-grid">
+            <div class="module-panel">
+                <span class="module-label mono">[MODULE: STANDING]</span>
+                <h2 class="module-title">Academic Overview</h2>
+                <ul class="metric-list mono">
+                    <li class="metric-item">
+                        <span class="metric-key">INSTITUTION:</span> <span>HKUST</span>
+                    </li>
+                    <li class="metric-item">
+                        <span class="metric-key">CGA:</span> <span class="high-value">4.207 / 4.30</span>
+                    </li>
+                    <li class="metric-item">
+                        <span class="metric-key">HONORS:</span> <span>Dean's List (All Semesters)</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h3 class="section-label">Operational Experience</h3>
+            
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">HKUST Firebird CTF Team (Team "what()")</span>
+                    <span class="intel-meta">Jan 2025 - Present</span>
+                </div>
+                <div class="intel-subtitle">Core Member, Team Leader & Instruction Helper</div>
+                <ul class="intel-details">
+                    <li><strong>Leadership:</strong> Directed a highly competitive cybersecurity team in multiple international CTF tournaments, consistently securing Top-10 global and regional rankings.</li>
+                    <li><strong>Reverse Engineering Mastery:</strong> Spearheaded the team's RE efforts, repeatedly achieving "full solves" across high-stakes competitions by analyzing complex binaries and bypassing obfuscation.</li>
+                    <li><strong>Cryptanalysis:</strong> Solved advanced cryptography challenges by identifying algorithmic vulnerabilities in RSA, AES, and custom encryption schemes.</li>
+                    <li><strong>Instruction:</strong> Instructor for <em>COMP2633: Competitive Programming in Cybersecurity I</em>, delivering specialized lectures on Reverse Engineering.</li>
+                </ul>
+            </div>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Undergraduate Teaching Assistant (UGTA)</span>
+                    <span class="intel-meta">Jun 2025 - Present</span>
+                </div>
+                <div class="intel-subtitle">HKUST (COMP1023: Introduction to Python Programming)</div>
+                <ul class="intel-details">
+                    <li><strong>Curriculum Design:</strong> Architected comprehensive teaching materials, including tutorial slides, self-study questions, and hands-on labs.</li>
+                    <li><strong>Assessment Engineering:</strong> Designed complex programming assignments (e.g., Pygame-based game clones, algorithmic maze pathfinding) to systematically evaluate proficiency in Python.</li>
+                </ul>
+            </div>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Mainland Students and Scholars Society UG Section (MSSSUG)</span>
+                    <span class="intel-meta">Nov 2024 - Dec 2025</span>
+                </div>
+                <div class="intel-subtitle">IT Secretary</div>
+                <ul class="intel-details">
+                    <li><strong>Full-Stack Event Systems:</strong> Engineered secure web applications to digitize large-scale offline events, including an anti-fraud QR-code election voting system.</li>
+                    <li><strong>Interactive Live Platform:</strong> Developed a real-time "danmu" (bullet screen) interactive system bridging a web interface with a Python backend, enhancing audience engagement during a 200-attendee live concert.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h3 class="section-label">Architected Systems & Projects</h3>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Reliable Shortest Path Oracle on Dynamic Networks</span>
+                    <span class="intel-meta">Jun 2025 - Aug 2025</span>
+                </div>
+                <div class="intel-subtitle">HKUST Undergraduate Research Opportunities Program (UROP)</div>
+                <ul class="intel-details">
+                    <li>Developed a high-performance C++ algorithm to compute reliable shortest paths on large-scale, dynamic road networks with uncertain, uniformly-distributed travel times.</li>
+                    <li>Implemented randomized Contraction Hierarchies and restricted Bidirectional Dijkstra, engineering recursive mechanisms for real-time edge-weight updates.</li>
+                </ul>
+            </div>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Smart AC Temperature Control System</span>
+                    <span class="intel-meta">2025</span>
+                </div>
+                <div class="intel-subtitle">Hardware/Software Automation</div>
+                <ul class="intel-details">
+                    <li>Built an automated control loop using temperature sensors connected to a PC to enhance energy efficiency via real-time adjustments.</li>
+                    <li>Integrated a Playwright-based crawler for HKUST AC API access and a QQ Bot implementation for remote mobile operation.</li>
+                </ul>
+            </div>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Terminal Portfolio Website</span>
+                    <span class="intel-meta">2026</span>
+                </div>
+                <div class="intel-subtitle">Frontend Engineering</div>
+                <ul class="intel-details">
+                    <li>Built this website as an interactive shell workspace featuring a custom command runtime, virtual filesystem, and native preview panes.</li>
+                </ul>
+            </div>
+            
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Exploring Artificial Intelligence Driving Analysis</span>
+                    <span class="intel-meta">Spring 2025</span>
+                </div>
+                <div class="intel-subtitle">Computer Vision Assignment (COMP2211)</div>
+                <ul class="intel-details">
+                    <li>Developed a lane-based driving video analysis system using image processing techniques, classifying straight, left-turn, and right-turn maneuvers with &gt;85% accuracy.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h3 class="section-label">Core Capabilities</h3>
+            <div class="tag-grid mono">
+                <span class="tag tag-highlight">Python (8 yrs)</span>
+                <span class="tag tag-highlight">C/C++ (6 yrs)</span>
+                <span class="tag">HTML/JS/CSS</span>
+                <span class="tag">SQL</span>
+                <span class="tag">Reverse Engineering</span>
+                <span class="tag">Cryptography</span>
+                <span class="tag">Algorithm Design</span>
+                <span class="tag">Full-Stack Web Systems</span>
+                <span class="tag">Git & GitHub</span>
+                <span class="tag">Ghidra / IDA Pro</span>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h3 class="section-label">Education & Honors</h3>
+            
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">The Hong Kong University of Science and Technology</span>
+                    <span class="intel-meta">Sep 2024 - May 2028</span>
+                </div>
+                <div class="intel-subtitle">B.Sc. in Computer Science (+AI) & Electronic Engineering</div>
+                <ul class="intel-details">
+                    <li><strong>Academic Record:</strong> A+ in all COMP and ELEC courses to date; A-range performance overall.</li>
+                    <li><strong>Awards:</strong> Dean's List (Fall 2024-25, Spring 2024-25, Fall 2025-26).</li>
+                    <li><strong>Scholarship:</strong> Nominated for Joseph Lau Luen Hung Charitable Trust Scholarship - Continuing Awards (Feb 2026).</li>
+                </ul>
+            </div>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">University of Illinois Urbana-Champaign (UIUC)</span>
+                    <span class="intel-meta">Fall 2027</span>
+                </div>
+                <div class="intel-subtitle">Upcoming Competitive Exchange Program</div>
+                <ul class="intel-details">
+                    <li>Selected for a competitive exchange to deepen expertise in network security and algorithms through UIUC's renowned CS program.</li>
+                </ul>
+            </div>
+
+            <div class="intel-block">
+                <div class="intel-header">
+                    <span class="intel-title">Cybersecurity Championships</span>
+                    <span class="intel-meta">2024 - 2026</span>
+                </div>
+                <ul class="intel-details">
+                    <li><strong>Champion:</strong> CUHK Cybersecurity CTF (Sep 2025) & HKUST Firebird CTF (Jan 2025).</li>
+                    <li><strong>Top Placements:</strong> #5 Degree Division PUCTF (Apr 2025), #6 WolvCTF (Mar 2025), #7 Tertiary Category HKCERT CTF (Jan 2026).</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <ul class="contact-uplink mono">
+                <li class="uplink-item"><a href="mailto:ychennc@connect.ust.hk">EMAIL</a></li>
+                <li class="uplink-item"><a href="https://linkedin.com/in/atopos-yifu" target="_blank">LINKEDIN</a></li>
+                <li class="uplink-item"><a href="https://github.com/Atopos1331" target="_blank">GITHUB</a></li>
+            </ul>
+            <p class="copyright-line mono">© 2026 EAFOO :: SYSTEMS OPS</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
