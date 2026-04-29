@@ -1,17 +1,15 @@
-# Honors & Awards
+# Honors & Competitions
+
+## CTF Championships
+- `1st Place` - CUHK Cybersecurity CTF (`2025`)
+- `1st Place` - HKUST Firebird CTF (`2025`)
+
+## CTF Top-10 Finishes
+- `#5` (Student Div.) - UMDCTF (`2026`)
+- `#5` (Degree Div.) - PUCTF (`2025`)
+- `#6` - WolvCTF (`2025`)
+- `Top-8` (Tertiary Category) - HKCERT CTF Qualifying Round (`2024 & 2025`)
 
 ## Academic Honors
-- **Nomination:** Joseph Lau Luen Hung Charitable Trust Scholarship - Continuing Awards (`Feb 2026`)
-- **Dean's List:** HKUST School of Engineering (`Fall 2025-26`)
-- **Dean's List:** HKUST School of Engineering (`Spring 2024-25`)
-- **Dean's List:** HKUST School of Engineering (`Fall 2024-25`)
-
-## Cybersecurity & CTF Achievements
-- `Champion` - CUHK Cybersecurity CTF (`Sep 2025`)
-- `Champion` - HKUST Firebird CTF (`Jan 2025`)
-- `#5` (Degree Division) - PUCTF (`Apr 2025`)
-- `#6` - WolvCTF (`Mar 2025`)
-- `#7` (Tertiary Category) - HKCERT CTF Qualifying Round (`Jan 2026`)
-- `#8` (Tertiary Category) - HKCERT CTF Qualifying Round (`Nov 2024`)
-
-*Additional strong international finishes across Pearl CTF, AmateursCTF, TAMUCTF, JerseyCTF, BITSCTF, and TUCTF.*
+- **Nominee:** Joseph Lau Luen Hung Charitable Trust Scholarship (`2026`)
+- **Dean's List:** HKUST School of Engineering (`3 times: 2024 - 2026`)

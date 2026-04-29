@@ -1,28 +1,22 @@
 # Skills
 
+## Cybersecurity
+- Reverse Engineering
+- Binary Exploitation
+- Penetration Testing
+- Cryptanalysis
+
 ## Programming Languages
-- **Python:** Proficient (`8` years)
-- **C/C++:** Proficient (`6` years)
-- **Web:** HTML, JavaScript, CSS
-- **Database:** SQL
+- Python, C++
+- TypeScript, JavaScript
+- SQL, PHP
+- HTML/CSS
 
-## Core Domains
-- Reverse Engineering & Penetration Testing
-- Cryptography & CTF Security Problem Solving
-- Full-Stack Web Systems & Automation
-- Algorithm Design & Data Structures
-- Artificial Intelligence Systems
-
-## Frameworks & Tools
-- Git & GitHub
-- Playwright, Pygame
-- Qualtrics, LaTeX, Microsoft Office
-- Reverse Engineering Suites (Ghidra, IDA Pro, etc.)
-
-## Engineering Capabilities
-- Rapid prototyping in unfamiliar stacks with AI-assisted iteration.
-- Comfortable traversing frontend UI, backend architecture, data pipelines, and systems-level programming.
+## Frameworks & Technologies
+- React.js, Web Workers
+- Playwright, SQLite
+- Git, NumPy, MongoDB
 
 ## Languages
-- **Mandarin Chinese:** Native
-- **English:** Professional Working Proficiency
+- English
+- Mandarin
